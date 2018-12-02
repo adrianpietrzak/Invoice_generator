@@ -6,15 +6,12 @@ Dim bazaklientow As Excel.Workbook
 Set bazaklientow = Workbooks.Open("C:\Users\Michał\Desktop\Program Faktura\Baza_klientow.xlsx")
 
 
-
 'wyszukiwanie po nazwie firmy
 firma = InputBox("Podaj nazwe wyszukiwanej osoby bądź firmy", "Nazwa Osoby/Firmy")
 
 If Not firma = "" Then
     ActiveSheet.ListObjects("Tabela1").Range.AutoFilter Field:=4, Criteria1:="=*" & firma & "*"
 
-
-'---------------------------------------------------------------------------------------------------------
 
 'wyszukiwane po nipie
     Else
@@ -27,9 +24,6 @@ If Not firma = "" Then
             End If
             
             ActiveSheet.ListObjects("Tabela1").Range.AutoFilter Field:=2, Criteria1:=NIP
-
-
-
 
 End If
 
@@ -99,9 +93,9 @@ Range("A1").PasteSpecial Paste:=xlPasteColumnWidths
     Application.PrintCommunication = True
     
 
-
 Workbooks("Faktura_template.xlsm").Worksheets("FormyPlatnosci").Activate
 Range("A1", "C3").Copy
+
 
 'dodawanie listy rozwijalnej
 Nowafaktura.Activate
@@ -133,6 +127,7 @@ Range("A1").PasteSpecial Paste:=xlPasteValues
 
 
 'uzupelnianie faktury danymi
+
 'nip
 Range("B2").Copy
 Worksheets("Faktura").Activate
@@ -207,9 +202,7 @@ OstatniRok = Right(OstatniaData, 4)
 
 
 If (ObecnyRok = OstatniRok) Then
-'OstKomorka = Cells(Rows.Count, "A").End(xlUp).Row
-'Str (OstKomorka)
-
+               
 'konwersja na wlasciwy numer faktury
 Nowafaktura.Activate
 Worksheets("Faktura").Activate
@@ -219,12 +212,9 @@ Range("J1:K1").Select
 
 NrFaktury = ActiveCell.Value
 
-
 LiczbyZPrawejDoZamiany = Right(Dzis, 6)
 ZmianaFormatuFaktury = "/" + Right(Dzis, 4)
 Range("J1:K1") = Replace(NrFaktury, LiczbyZPrawejDoZamiany, ZmianaFormatuFaktury)
-
-
 
 
 'tutaj zamienia date faktury na nowy rok
@@ -252,7 +242,6 @@ Set Nowafaktura = ActiveWorkbook
 Worksheets("Faktura").Activate
 
 
-
 'kasuje niepotrzebne spreadsheety
 Application.DisplayAlerts = False
 Worksheets("FormyPlatnosci").Delete
@@ -270,7 +259,10 @@ Range("J1:K1").Copy
 Dim wystawionefaktury As Excel.Workbook
 Set wystawionefaktury = Workbooks.Open("C:\Users\Michał\Desktop\Program Faktura\Wystawione_faktury.xlsx")
 
+                        
+                        
 'uzupelnianie pliku z historia
+                        
 'kopiowanie nr faktury
 OstKomorka = Cells(Rows.Count, "A").End(xlUp).Row
 ObecnaFaktura = Range("A" & OstKomorka).Offset(1, 0).Select
@@ -312,6 +304,7 @@ Range("C" & OstKomorka).PasteSpecial Paste:=xlPasteFormats
 'kod zapisujacy fakture oryginał
 Nowafaktura.Activate
 Application.DisplayAlerts = False
+            
 Range("J1:K1").Copy
 Range("F1").Select
 ActiveSheet.Paste
@@ -356,6 +349,7 @@ nazwa_pliku = "Faktura_kopia_" & NrZapisu & ".xlsx"
 ActiveWorkbook.SaveAs Filename:=sciezka & nazwa_pliku
 Range("F1:G1").Clear
 ActiveWorkbook.Save
+            
 Application.DisplayAlerts = True
 
 
