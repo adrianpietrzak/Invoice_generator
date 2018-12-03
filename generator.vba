@@ -14,7 +14,7 @@ Sub generator()
             ActiveSheet.ListObjects("Tabela1").Range.AutoFilter Field:=4, Criteria1:="=*" & firma & "*"
 
 'wyszukiwane po nipie
-    Else
+         Else
             NIP = InputBox("Podaj NIP wyszkuwanej osoby bądź firmy. Aby makro działało poprawnie podaj PEŁNY NIP", "NIP")
 
             
@@ -217,12 +217,13 @@ Sub generator()
                 ZmianaFormatuFaktury = "/" + Right(Dzis, 4)
                 Range("J1:K1") = Replace(NrFaktury, LiczbyZPrawejDoZamiany, ZmianaFormatuFaktury)
 
-
 'tutaj zamienia date faktury na nowy rok
-        Else
+                Else
+                    
                 Nowafaktura.Activate
                 Worksheets("Faktura").Activate
                 Range("J1:K1").Value = "1/" & ObecnyRok
+                    
         End If
 
 
